@@ -1,27 +1,29 @@
-# 原神抽卡记录导出工具
+Source: [biuuu](https://github.com/biuuu/genshin-gacha-export)
+
+# Genshin Gacha Export (Vietnamese version)
 
 Electron + Vite + Vue3 + Tailwindcss
 
 ## TODO
 
-- [ ] 可以选择国服或海外服
-- [ ] 多用户切换
-- [x] 兼容其它语言的道具类型 -“武器”、“角色”
-- [ ] 版本更新提示
-- [ ] 道具的详细数量展示
-- [ ] 导出、导入本地数据
-- [x] 记录使用的语言版本，更新数据时固定使用同一种语言
+- [ ] Bạn có thể chọn dịch vụ trong nước hoặc dịch vụ nước ngoài
+- [ ] Chuyển đổi nhiều người dùng
+- [x] Tương thích với nhiều loại ngôn ngữ khác nhau. Ví dụ: "Vũ khí", "Nhân vật"
+- [ ] Lời nhắc cập nhật phiên bản
+- [ ] Hiển thị chi tiết số lượng
+- [ ] Xuất và nhập dữ liệu cục bộ
+- [x] Ghi lại phiên bản ngôn ngữ đã sử dụng và luôn sử dụng cùng một ngôn ngữ khi cập nhật dữ liệu
 
 ## Devlopment
 
 ```
-# 安装模块
+# Installing packages
 yarn install
 
-# 启动Vite开发模式
+# Vite Dev Mode
 yarn dev
 
-# 打开Electron
+# Electron mode
 yarn start
 
 # Build
