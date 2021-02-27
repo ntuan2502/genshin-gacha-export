@@ -66,13 +66,13 @@ const allowClick = () => {
 const hint = computed(() => {
   const data = state.dataMap.get(state.current)
   if (state.status === 'init') {
-    return '请先在游戏里打开任意一个抽卡记录后再点击“加载数据”按钮'
+    return 'Vui lòng đăng nhập game và vào trang lịch sử cầu nguyện'
   } else if (state.status === 'loaded') {
-    return `上次数据更新时间为：${new Date(data.time).toLocaleString()}`
+    return `Cập nhật lần cuối：${new Date(data.time).toLocaleString()}`
   } else if (state.status === 'loading') {
     return state.log || 'Loading...'
   } else if (state.status === 'failed') {
-    return state.log + ' - 操作失败'
+    return state.log + ' - Lỗi'
   }
   return '　'
 })
@@ -145,6 +145,6 @@ onMounted(() => {
     console.error(err)
   })
 
-  document.title = `原神抽卡记录导出工具 - v${version}`
+  document.title = `Genshin Gacha Export - v${version}`
 })
 </script>

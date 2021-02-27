@@ -106,7 +106,7 @@ const saveJSON = async (name, data) => {
   try {
     await fs.outputJSON(path.join(userDataPath, name), data)
   } catch (e) {
-    sendMsg('保存本地数据失败')
+    sendMsg('Không lưu được dữ liệu cục bộ.')
     sendMsg(e, 'ERROR')
     await sleep(3)
   }
