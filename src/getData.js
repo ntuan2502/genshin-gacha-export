@@ -21,10 +21,10 @@ const saveData = async (data, url) => {
 }
 
 const defaultTypeMap = new Map([
-  ['301', '角色活动祈愿'],
-  ['302', '武器活动祈愿'],
-  ['200', '常驻祈愿'],
-  ['100', '新手祈愿']
+  ['301', 'Cầu Nguyện Nhân Vật'],
+  ['302', 'Cầu Nguyện Vũ Khí'],
+  ['200', 'Cầu Nguyện Thường'],
+  ['100', 'Cầu Nguyện Tân Thủ']
 ])
 
 let localDataReaded = false
@@ -93,7 +93,7 @@ const readLog = async () => {
     const userPath = app.getPath('home')
     const gameNames = await detectGameLocale(userPath)
     if (!gameNames.length) {
-      sendMsg('未找到游戏日志，确认是否已打开游戏抽卡记录')
+      sendMsg('Không tìm thấy thông tin cầu nguyện. Vui lòng đăng nhập vào game và mở trang lịch sử cầu nguyện rồi tiến hành thử lại.')
       return false
     }
     const promises = gameNames.map(async name => {
@@ -109,10 +109,10 @@ const readLog = async () => {
         return url
       }
     }
-    sendMsg('未找到URL')
+    sendMsg('Không tìm thấy URL.')
     return false
   } catch (e) {
-    sendMsg('读取日志失败')
+    sendMsg('Không đọc được lịch sử cầu nguyện.')
     return false
   }
 }
@@ -123,12 +123,12 @@ const getGachaLog = async ({ key, page, name, retryCount, url }) => {
     return res.data.list
   } catch (e) {
     if (retryCount) {
-      sendMsg(`获取${name}第${page}页失败，5秒后进行第${6 - retryCount}次重试……`)
+      sendMsg(`Không tải được trang ${name} của ${page}. Hãy thử lại ${6 - retryCount} sau 5 giây...`)
       await sleep(5)
       retryCount--
       return await getGachaLog(key, page, name, retryCount, url)
     } else {
-      sendMsg(`获取${name}第${page}页失败，已超出重试次数`)
+      sendMsg(`Không tải được trang ${name} của ${page}, số lần thử lại đã vượt quá!`)
       throw e
     }
   }
@@ -142,10 +142,10 @@ const getGachaLogs = async ({ name, key }, queryString) => {
   const url = `https://hk4e-api.mihoyo.com/event/gacha_info/api/getGachaLog?${queryString}`
   do {
     if (page % 10 === 0) {
-      sendMsg(`正在获取${name}第${page}页，每10页休息1秒……`)
+      sendMsg(`Đang nạp ${name} trang ${page}, nghỉ 1 giây sau mỗi 10 trang.`)
       await sleep(1)
     }
-    sendMsg(`正在获取${name}第${page}页`)
+    sendMsg(`Đang nạp ${name} trang ${page}.`)
     res = await getGachaLog({ key, page, name, url, retryCount: 5 })
     if (!uid && res.length) {
       uid = res[0].uid
@@ -169,11 +169,11 @@ const tryGetUid = async (queryString) => {
 
 const getGachaType = async (queryString) => {
   const gachaTypeUrl = `https://hk4e-api.mihoyo.com/event/gacha_info/api/getConfigList?${queryString}`
-  sendMsg('正在获取抽卡活动类型')
+  sendMsg('Lịch sử cầu nguyện')
   const res = await request(gachaTypeUrl)
   if (res.retcode !== 0) {
     if (res.message === 'authkey timeout') {
-      sendMsg('身份认证已过期，请重新打开游戏抽卡记录')
+      sendMsg('Phiên đã hết hạn. Vui lòng đăng nhập vào game và mở trang lịch sử cầu nguyện.')
     } else {
       sendMsg(res.message)
     }
@@ -188,14 +188,14 @@ const getGachaType = async (queryString) => {
     }
   })
   orderedGachaTypes.push(...gachaTypes)
-  sendMsg('获取抽卡活动类型成功')
+  sendMsg('Tải trang lịch sử cầu nguyện thành công.')
   return orderedGachaTypes
 }
 
 const getQuerystring = (url) => {
   const { searchParams } = new URL(url)
   if (!searchParams.get('authkey')) {
-    sendMsg('URL中缺少authkey')
+    sendMsg('authkey bị thiếu trong URL')
     return false
   }
   searchParams.delete('page')
@@ -232,7 +232,7 @@ const proxyServer = (port) => {
 const useProxy = async () => {
   const ip = localIp()
   const port = config.proxyPort
-  sendMsg(`正在使用代理模式[${ip}:${port}]获取URL，请打开游戏抽卡记录，或刷新抽卡记录`)
+  sendMsg(`Sử dụng chế độ proxy [${ip}:${port}] để lấy URL, vui lòng đăng nhập vào game và mở trang lịch sử cầu nguyện.`)
   await enableProxy('127.0.0.1', port)
   const url = await proxyServer(port)
   await disableProxy()
