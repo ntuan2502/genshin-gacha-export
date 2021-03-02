@@ -1,13 +1,13 @@
 <template>
   <div class="flex justify-between">
     <div>
-      <el-button type="primary" :icon="state.status === 'init' ? 'el-icon-sugar': 'el-icon-refresh-right'" class="focus:outline-none" :disabled="!allowClick()" plain size="small" @click="fetchData" :loading="state.status === 'loading'">{{state.status === 'init' ? '加载数据': '更新数据'}}</el-button>
-      <el-button icon="el-icon-folder-opened" @click="saveExcel" class="focus:outline-none" :disabled="!gachaData" size="small" type="success" plain>导出Excel</el-button>
-      <el-tooltip v-if="detail && state.status !== 'loading'" content="从其它账号导出数据" placement="bottom">
+      <el-button type="primary" :icon="state.status === 'init' ? 'el-icon-sugar': 'el-icon-refresh-right'" class="focus:outline-none" :disabled="!allowClick()" plain size="small" @click="fetchData" :loading="state.status === 'loading'">{{state.status === 'init' ? 'Tải xuống': 'Cập nhật'}}</el-button>
+      <el-button icon="el-icon-folder-opened" @click="saveExcel" class="focus:outline-none" :disabled="!gachaData" size="small" type="success" plain>Xuất file Excel</el-button>
+      <el-tooltip v-if="detail && state.status !== 'loading'" content="Xuất dữ liệu từ tài khoản khác" placement="bottom">
         <el-button @click="newUser()" plain icon="el-icon-plus" size="small" class="focus:outline-none"></el-button>
       </el-tooltip>
     </div>
-    <el-select v-if="state.status !== 'loading' && state.dataMap && (state.dataMap.size > 1 || (state.dataMap.size === 1 && state.current === 0))" class="w-32" size="small" @change="changeCurrent" v-model="uidSelectText" placeholder="请选择">
+    <el-select v-if="state.status !== 'loading' && state.dataMap && (state.dataMap.size > 1 || (state.dataMap.size === 1 && state.current === 0))" class="w-32" size="small" @change="changeCurrent" v-model="uidSelectText" placeholder="Vui lòng chọn">
       <el-option
         v-for="item of state.dataMap"
         :key="item[0]"
@@ -48,7 +48,7 @@ const gachaData = computed(() => {
 
 const uidSelectText = computed(() => {
   if (state.current === 0) {
-    return '新账号'
+    return 'Tài khoản mới'
   } else {
     return state.current
   }
